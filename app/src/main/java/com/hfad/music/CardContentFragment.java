@@ -10,10 +10,10 @@ import android.view.ViewGroup;
  * Created by energywin4 on 21/9/2017.
  */
 
-public class ListContentFragment extends Fragment {
+public class CardContentFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.item_list, null);
+        return inflater.inflate(R.layout.item_card, null);
     }
 }
