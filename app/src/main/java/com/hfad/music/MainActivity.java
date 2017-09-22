@@ -1,10 +1,14 @@
 package com.hfad.music;
 
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -18,6 +22,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     //private Toolbar mToolbar;
+    private DrawerLayout mDrawerLayout;
 
     //https://codelabs.developers.google.com/codelabs/material-design-style/index.html?index=..%2F..%2Findex#3
     //https://www.androidhive.info/2015/04/android-getting-started-with-material-design/
@@ -26,6 +31,33 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer);
+
+        //Adding menu icon to the drawer:
+        ActionBar supportActionBar = getSupportActionBar();
+        if(supportActionBar!=null){
+            supportActionBar.setHomeAsUpIndicator(R.drawable.ic_menu_white);
+            supportActionBar.setDefaultDisplayHomeAsUpEnabled(true);
+        }
+
+        //Set the behaviour of Navigation drawer:
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener(){
+                    //This method will trigger on item click of the navigation menu:
+
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem){
+                        menuItem.setChecked(true);
+                        //TODO:handle navigation
+                        //Closing drawer on item click
+                        mDrawerLayout.closeDrawers();
+                        return true;
+                    }
+                }
+        );
+
 
         //Adding toolbar to main screen
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
@@ -95,9 +127,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
-        getMenuInflater().inflate(R.menu.menu_main,menu);
+        getMenuInflater().inflate(R.menu.menu_navigation,menu);
         return true;
     }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
@@ -107,7 +141,9 @@ public class MainActivity extends AppCompatActivity {
         if(id==R.id.action_settings){
             return true;
         }
-
+        else if(id==android.R.id.home){
+            mDrawerLayout.openDrawer(GravityCompat.START);
+        }
         return super.onOptionsItemSelected(item);
     }
 
