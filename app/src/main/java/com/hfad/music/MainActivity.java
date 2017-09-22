@@ -1,6 +1,8 @@
 package com.hfad.music;
 
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -14,6 +16,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Adapter;
 
 import java.util.ArrayList;
@@ -75,6 +78,16 @@ public class MainActivity extends AppCompatActivity {
 
         TabLayout tabs = (TabLayout)findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
+
+        //Adding floating action button:
+        FloatingActionButton fab = (FloatingActionButton)findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Snackbar.make(v,"Hello! Music User!",Snackbar.LENGTH_LONG).show();
+            }
+        });
+
 
     }
 
