@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         //Adding toolbar to main screen
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+      //     getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         //Adding Tabs
         /*TabLayout tabs = (TabLayout)findViewById(R.id.tabs);
@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return 0;
+            return mFragmentList.size();
         }
 
         public void addFragment(Fragment fragment,String title){
