@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     //private Toolbar mToolbar;
 
     //https://codelabs.developers.google.com/codelabs/material-design-style/index.html?index=..%2F..%2Findex#3
+    //https://www.androidhive.info/2015/04/android-getting-started-with-material-design/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
