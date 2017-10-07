@@ -90,7 +90,8 @@ public class CreateAccountFragment extends Fragment implements CreateAccountCont
 
     }
 
-    /*@Override
+
+    @Override
     public void onActivityCreated (Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
         if(presenter==null){
@@ -103,5 +104,5 @@ public class CreateAccountFragment extends Fragment implements CreateAccountCont
 
             );
         }
-    }*/
+    }
 }

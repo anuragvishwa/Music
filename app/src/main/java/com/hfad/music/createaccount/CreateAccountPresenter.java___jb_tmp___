@@ -88,7 +88,7 @@ public class CreateAccountPresenter implements CreateAccountContract.Presenter{
                 .subscribeOn(scheduleProvider.io())
                 .observeOn(scheduleProvider.ui())
                 .subscribeWith(
-                        new Disposable 
+                        new Disposable
                 )
         )
 
