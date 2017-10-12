@@ -6,6 +6,8 @@ package com.hfad.music.Song;
 
 public class SongPresenter implements SongContract.Presenter {
 
+    private SongContract.View view;
+
     @Override
     public void subscribe() {
 

@@ -13,6 +13,7 @@ public interface SongContract {
         void setSongName(String name);
 
         void setArtist(String songArtist);
+
     }
 
 

@@ -119,9 +119,15 @@ public class SongFragment extends Fragment implements SongContract.View {
     @Override
     public void onActivityCreated(Bundle savedInstance){
         super.onActivityCreated(savedInstance);
-        if(presenter==null){
+        /*if(presenter==null){
             presenter = new SongFragment()
-        }
+        }*/
 
+    }
+
+    @Override
+    public void onDestroy(){
+        presenter.unsubscribe();
+        super.onDestroy();
     }
 }
