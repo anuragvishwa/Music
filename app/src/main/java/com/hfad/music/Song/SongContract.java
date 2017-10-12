@@ -10,9 +10,9 @@ import com.hfad.music.util.BaseView;
 public interface SongContract {
     interface View extends BaseView<Presenter>{
 
-        void songList();
+        void setSongName(String name);
 
-        void selectSong();
+        void setArtist(String songArtist);
     }
 
 

@@ -39,7 +39,6 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.ViewHolder> {
         SongList songList = songLists.get(position);
         holder.songName.setText(songList.getTitle());
         holder.artistName.setText(songList.getArtist());
-
     }
 
     @Override

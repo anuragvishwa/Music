@@ -10,7 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hfad.music.R;
 
@@ -22,10 +24,14 @@ import java.util.List;
  */
 public class SongFragment extends Fragment implements SongContract.View {
 
+    private TextView song,artist;
+    private ImageButton thumbnail;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private List<SongList> songLists;
     private SongContract.Presenter presenter;
+    private View contentContainer;
+
 
 
     public SongFragment() {
@@ -33,37 +39,33 @@ public class SongFragment extends Fragment implements SongContract.View {
     }
 
 
+
+
     @Override
     public void setPresenter(SongContract.Presenter presenter) {
-
         this.presenter = presenter;
-
     }
 
-    @Override
-
     public static SongFragment newInstance(){
+
         return new SongFragment();
     }
 
     public void makeToast(@StringRes int stringId) {
+        Toast.makeText(getActivity().getApplicationContext(),getString(stringId),
+                Toast.LENGTH_SHORT).show();
+
 
     }
+
 
     @Override
     public void makeToast(String message) {
+        Toast.makeText(getActivity(),message,Toast.LENGTH_SHORT).show();
 
     }
 
-    @Override
-    public void songList() {
 
-    }
-
-    @Override
-    public void selectSong() {
-
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -77,7 +79,7 @@ public class SongFragment extends Fragment implements SongContract.View {
                        ViewGroup container,
                        Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.fragment_song,container,false);
-
+/*
         recyclerView = (RecyclerView)view.findViewById(R.id.songRecycle);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -94,9 +96,24 @@ public class SongFragment extends Fragment implements SongContract.View {
 
         adapter = new SongAdapter(songLists,getActivity());
 
-        recyclerView.setAdapter(adapter);
+        recyclerView.setAdapter(adapter);*/
+        contentContainer = view.findViewById(R.id.songRelative);
+        song = (TextView)view.findViewById(R.id.songName);
+        artist = (TextView)view.findViewById(R.id.albumName);
+
 
         return view;
+    }
+
+    @Override
+    public void setSongName(String name) {
+        song.setText(name);
+    }
+
+    @Override
+    public void setArtist(String songArtist) {
+        artist.setText(songArtist);
+
     }
 
     @Override
