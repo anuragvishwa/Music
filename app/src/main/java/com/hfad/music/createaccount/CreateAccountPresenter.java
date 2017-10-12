@@ -1,5 +1,7 @@
 package com.hfad.music.createaccount;
 
+import android.support.v7.widget.LinearLayoutCompat;
+
 import com.hfad.music.data.auth.AuthSource;
 import com.hfad.music.data.auth.Credentials;
 import com.hfad.music.data.database.DatabaseSource;
@@ -8,6 +10,7 @@ import com.hfad.music.util.BaseScheduleProvider;
 import javax.sql.DataSource;
 
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.observers.DisposableCompletableObserver;
 
 /**
  * Created by anurag on 6/10/17.
@@ -88,7 +91,17 @@ public class CreateAccountPresenter implements CreateAccountContract.Presenter{
                 .subscribeOn(scheduleProvider.io())
                 .observeOn(scheduleProvider.ui())
                 .subscribeWith(
-                        new Disposable 
+                        new DisposableCompletableObserver(){
+                            @Override
+                            public void onComplete(){
+                                view.startProfilePageActivity();
+                            }
+                            @Override
+                            public void onError(Throwable e){
+                                view.makeToast(e.getMessage());
+                            }
+
+                        }
                 )
         )
 

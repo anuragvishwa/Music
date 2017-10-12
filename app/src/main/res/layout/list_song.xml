@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/activity_horizontal_margin">
+
+    <ImageButton
+        android:id="@+id/songButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp" />
+
+    <TextView
+        android:id="@+id/songName"
+        android:layout_width="300dp"
+        android:layout_height="35dp"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@+id/songButton"
+        android:text="Anurag Vishwa"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/albumName"
+        android:text="Vishal Vishwa"
+        android:layout_width="300dp"
+        android:layout_height="15dp"
+        android:layout_below="@+id/songName"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@+id/songButton" />
+</RelativeLayout>
