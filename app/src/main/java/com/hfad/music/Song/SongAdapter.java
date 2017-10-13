@@ -18,10 +18,17 @@ import java.util.List;
 
 public class SongAdapter extends RecyclerView.Adapter<SongAdapter.ViewHolder> {
 
-    public SongAdapter(List<SongList> songLists, Context context) {
+   /* public SongAdapter(List<SongList> songLists, Context context) {
         this.songLists = songLists;
         this.context = context;
-    }
+    }*/
+
+   private final SongPresenter presenter;
+
+
+   public SongAdapter(SongPresenter songPresenter){
+       this.presenter = songPresenter;
+   }
 
     private List<SongList> songLists;
     private Context context;
@@ -35,18 +42,28 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.ViewHolder> {
         return new ViewHolder(v);
     }
 
-    @Override
+  /*  @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
         SongList songList = songLists.get(position);
         holder.songName.setText(songList.getTitle());
         holder.artistName.setText(songList.getArtist());
-    }
+    }*/
 
     @Override
+    public void onBindViewHolder(ViewHolder holder,int position){
+        presenter.onBindRepositoryRowViewAtPosition(holder,position);
+    }
+
+   /* @Override
     public int getItemCount() {
         return songLists.size();
-    }
+    }*/
+
+   @Override
+   public int getItemCount(){
+       return presenter.getSongsCount();
+   }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 

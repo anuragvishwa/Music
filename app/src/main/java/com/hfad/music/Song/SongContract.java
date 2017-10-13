@@ -33,6 +33,10 @@ public interface SongContract {
 
         void deleteSong();
 
+        void onBindRepositoryRowViewAtPosition(SongAdapter.ViewHolder holder,int position);
+
+        int getSongsCount();
+
     }
 
 }

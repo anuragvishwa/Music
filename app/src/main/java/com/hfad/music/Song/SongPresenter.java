@@ -52,4 +52,14 @@ public class SongPresenter implements SongContract.Presenter {
     public void deleteSong() {
 
     }
+
+    @Override
+    public void onBindRepositoryRowViewAtPosition(SongAdapter.ViewHolder holder, int position) {
+
+    }
+
+    @Override
+    public int getSongsCount() {
+        return 0;
+    }
 }
