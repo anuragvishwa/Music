@@ -65,7 +65,7 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.ViewHolder> {
        return presenter.getSongsCount();
    }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder implements SongViewHolder{
 
         public TextView songName;
         public TextView artistName;
@@ -77,6 +77,16 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.ViewHolder> {
             songName = (TextView)itemView.findViewById(R.id.songName);
             artistName = (TextView)itemView.findViewById(R.id.albumName);
 
+        }
+
+        @Override
+        public void setSongName(String title){
+            songName.setText(title);
+        }
+
+        @Override
+        public void setArtistName(String name){
+            artistName.setText(name);
         }
     }
 }
