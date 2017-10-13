@@ -1,5 +1,7 @@
 package com.hfad.music.Song;
 
+import java.util.List;
+
 /**
  * Created by anurag on 23/9/17.
  */
@@ -7,6 +9,8 @@ package com.hfad.music.Song;
 public class SongPresenter implements SongContract.Presenter {
 
     private SongContract.View view;
+
+    private final List<SongList> listSongs;
 
     @Override
     public void subscribe() {
@@ -55,6 +59,7 @@ public class SongPresenter implements SongContract.Presenter {
 
     @Override
     public void onBindRepositoryRowViewAtPosition(SongAdapter.ViewHolder holder, int position) {
+        SongList song = listSongs.get(position);
 
     }
 
