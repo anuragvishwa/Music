@@ -7,16 +7,16 @@ import io.reactivex.schedulers.Schedulers;
  * Created by anurag on 6/10/17.
  */
 
-public class ImmideateScheduleProvider implements BaseScheduleProvider {
-    private static ImmideateScheduleProvider INSTANCE;
+public class ImmideateSchedulerProvider implements BaseSchedulerProvider {
+    private static ImmideateSchedulerProvider INSTANCE;
 
-    private ImmideateScheduleProvider(){
+    private ImmideateSchedulerProvider(){
 
     }
 
-    public static synchronized ImmideateScheduleProvider getInstance (){
+    public static synchronized ImmideateSchedulerProvider getInstance (){
         if(INSTANCE==null){
-            INSTANCE = new ImmideateScheduleProvider();
+            INSTANCE = new ImmideateSchedulerProvider();
         }
         return INSTANCE;
     }

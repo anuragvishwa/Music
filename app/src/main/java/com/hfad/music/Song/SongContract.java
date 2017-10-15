@@ -14,10 +14,18 @@ public interface SongContract {
 
         void setArtist(String songArtist);
 
+        void selectSong();
+
+        void setPresenter(SongContract.Presenter presenter);
+
+        void longPressSong(String songID);
+
     }
 
 
     interface Presenter extends BasePresenter{
+
+        void longPressOptions();
 
         void playSong();
 

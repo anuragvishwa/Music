@@ -46,6 +46,11 @@ public class SongFragment extends Fragment implements SongContract.View {
         this.presenter = presenter;
     }
 
+    @Override
+    public void longPressSong(String songID) {
+
+    }
+
     public static SongFragment newInstance(){
 
         return new SongFragment();
@@ -79,28 +84,9 @@ public class SongFragment extends Fragment implements SongContract.View {
                        ViewGroup container,
                        Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.fragment_song,container,false);
-/*
         recyclerView = (RecyclerView)view.findViewById(R.id.songRecycle);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-        songLists = new ArrayList<>();
-
-        for(int i=0;i<=10;i++){
-
-            SongList songList = new SongList("Channa mereya" + (i+1) , "Arjit Singh");
-
-            songLists.add(songList);
-
-        }
-
-        adapter = new SongAdapter(songLists,getActivity());
-
-        recyclerView.setAdapter(adapter);*/
-        contentContainer = view.findViewById(R.id.songRelative);
-        song = (TextView)view.findViewById(R.id.songName);
-        artist = (TextView)view.findViewById(R.id.albumName);
-
 
         return view;
     }
@@ -117,11 +103,18 @@ public class SongFragment extends Fragment implements SongContract.View {
     }
 
     @Override
+    public void selectSong() {
+
+    }
+
+    @Override
     public void onActivityCreated(Bundle savedInstance){
         super.onActivityCreated(savedInstance);
-        /*if(presenter==null){
-            presenter = new SongFragment()
-        }*/
+        if(presenter==null){
+            presenter = new SongPresenter();
+            adapter = new SongAdapter(presenter);
+            recyclerView.setAdapter(adapter);
+        }
 
     }
 

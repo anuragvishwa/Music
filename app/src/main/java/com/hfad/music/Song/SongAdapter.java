@@ -23,15 +23,15 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.ViewHolder> {
         this.context = context;
     }*/
 
-   private final SongPresenter presenter;
+   private final SongContract.Presenter presenter;
 
 
-   public SongAdapter(SongPresenter songPresenter){
+   public SongAdapter(SongContract.Presenter songPresenter){
        this.presenter = songPresenter;
    }
 
-    private List<SongList> songLists;
-    private Context context;
+/*    private List<SongList> songLists;
+    private Context context;*/
 
 
     @Override

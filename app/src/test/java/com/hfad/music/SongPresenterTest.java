@@ -2,11 +2,15 @@ package com.hfad.music;
 
 import com.hfad.music.Song.SongContract;
 import com.hfad.music.Song.SongPresenter;
+import com.hfad.music.data.auth.AuthInjection;
+import com.hfad.music.data.auth.AuthSource;
+import com.hfad.music.data.scheduler.SchedulerInjection;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 
@@ -23,30 +27,44 @@ public class SongPresenterTest {
 
     private SongPresenter presenter;
 
+    private AuthSource authSource;
+
     @Before
     public void SetUp() throws Exception{
         MockitoAnnotations.initMocks(this);
 
-        presenter = new SongPresenter();
+        authSource = AuthInjection.provideAuthSource();
+
+        presenter = new SongPresenter(authSource,view, SchedulerInjection.provideSchedulerProvider());
     }
 
     @Test
-    public void whenSongLoadSucceeds(){
+    public void whenUserDeleteSong() throws Exception{
 
-    }
+        presenter.deleteSong();
 
-    @Test
-    public void whenSongLoadFails(){
+        Mockito.verify(presenter).deleteSong();
 
-    }
-
-    @Test
-    public void whenUserPlaysTheSong(){
 
     }
 
     @Test
-    public void whenTheSongDoesntPlay(){
-        
+    public void whenSongDeleteFail() throws Exception{
+        Mockito.verify(view).makeToast(Mockito.anyString());
     }
+
+    @Test
+    public void whenUserSelectSong() throws Exception{
+
+        Mockito.verify(view).selectSong();
+
+    }
+
+    @Test
+    public void whenSongDoesntPlay() throws Exception{
+        Mockito.verify(view).makeToast(Mockito.anyString());
+    }
+
+
+
 }

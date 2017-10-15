@@ -25,7 +25,7 @@ public class SongActivity extends AppCompatActivity {
 
         SongFragment fragment = (SongFragment)manager.findFragmentByTag(SONG_FRAGMENT);
 
-        if(fragment== null){
+        if(fragment == null){
             fragment = SongFragment.newInstance();
         }
 

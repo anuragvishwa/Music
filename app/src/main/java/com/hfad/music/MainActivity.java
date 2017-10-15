@@ -1,5 +1,6 @@
 package com.hfad.music;
 
+import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -18,6 +19,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Adapter;
+
+import com.hfad.music.Song.SongActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         ActionBar supportActionBar = getSupportActionBar();
         if(supportActionBar!=null){
             supportActionBar.setHomeAsUpIndicator(R.drawable.ic_menu_white);
-            supportActionBar.setDefaultDisplayHomeAsUpEnabled(true);
+          //  supportActionBar.setDefaultDisplayHomeAsUpEnabled(true);
         }
 
         //Set the behaviour of Navigation drawer:
@@ -84,7 +87,10 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Snackbar.make(v,"Hello! Music User!",Snackbar.LENGTH_LONG).show();
+               // Snackbar.make(v,"Hello! Music User!",Snackbar.LENGTH_LONG).show();
+                Intent inent = new Intent(v.getContext(), SongActivity.class);
+                startActivity(inent);
+
             }
         });
 
@@ -152,6 +158,7 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if(id==R.id.action_settings){
+
             return true;
         }
         else if(id==android.R.id.home){

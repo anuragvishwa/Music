@@ -4,37 +4,9 @@
     android:layout_height="match_parent"
     tools:context="com.hfad.music.Song.SongFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/activity_horizontal_margin"
-        android:id="@+id/songRelative">
-
-        <ImageButton
-            android:id="@+id/songButton"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@mipmap/ic_launcher_round"/>
-
-        <TextView
-            android:id="@+id/songName"
-            android:layout_width="300dp"
-            android:layout_height="35dp"
-            android:layout_marginLeft="5dp"
-            android:layout_toRightOf="@+id/songButton"
-            android:text="Anurag Vishwa"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/albumName"
-            android:text="Vishal Vishwa"
-            android:layout_width="300dp"
-            android:layout_height="15dp"
-            android:layout_below="@+id/songName"
-            android:layout_marginLeft="5dp"
-            android:layout_toRightOf="@+id/songButton" />
-    </RelativeLayout>
+        android:layout_height="match_parent"
+        android:id="@+id/songRecycle"/>
 
 </FrameLayout>
