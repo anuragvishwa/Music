@@ -20,6 +20,9 @@ public interface SongContract {
 
         void longPressSong(String songID);
 
+        void removeSong();
+
+
     }
 
 

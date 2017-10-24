@@ -51,6 +51,11 @@ public class SongFragment extends Fragment implements SongContract.View {
 
     }
 
+    @Override
+    public void removeSong() {
+
+    }
+
     public static SongFragment newInstance(){
 
         return new SongFragment();
