@@ -1,7 +1,15 @@
 package com.hfad.music.Song;
 
 
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
+import android.media.MediaPlayer;
+import android.media.session.MediaSession;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.os.PowerManager;
 import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hfad.music.R;
+import com.hfad.music.Service.MediaPlayerService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,11 +40,57 @@ public class SongFragment extends Fragment implements SongContract.View {
     private List<SongList> songLists;
     private SongContract.Presenter presenter;
     private View contentContainer;
+    private MediaPlayerService player;
+    boolean serviceBound = false;
+
+
+
+    //Binding the client to the AudioPlayer Service:
+
+    private ServiceConnection serviceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+            MediaPlayerService.LocalBinder binder = (MediaPlayerService.LocalBinder) iBinder;
+            player = binder.getService();
+            serviceBound = true;
+
+            Toast.makeText(getActivity(), "Service Bound", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName componentName) {
+            serviceBound= false;
+
+        }
+    };
+
+    public void playAudio(String media){
+        //Check if service is active
+
+        if(!serviceBound) {
+            Intent playerIntent = new Intent(getActivity(), MediaPlayerService.class);
+            playerIntent.putExtra("media", media);
+            getActivity().startService(playerIntent);
+            getActivity().bindService(playerIntent, serviceConnection, Context.BIND_AUTO_CREATE);
+        }
+        else
+        {
+            //Service is active
+            //Send broadcast receiver
+
+        }
+
+    }
 
 
 
     public SongFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void createMediaPlayer() {
+
     }
 
 
@@ -48,6 +103,46 @@ public class SongFragment extends Fragment implements SongContract.View {
 
     @Override
     public void longPressSong(String songID) {
+
+    }
+
+    @Override
+    public boolean isPlaying() {
+        return false;
+    }
+
+    @Override
+    public int getCurrentStreamPosition() {
+        return 0;
+    }
+
+    @Override
+    public long getDuration() {
+        return 0;
+    }
+
+    @Override
+    public void setCurrentStreamPosition(int pos) {
+
+    }
+
+    @Override
+    public void play(MediaSession.QueueItem item) {
+
+    }
+
+    @Override
+    public void play(MediaSession.QueueItem item, boolean reset) {
+
+    }
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public void seekTo(int position) {
 
     }
 
@@ -87,6 +182,7 @@ public class SongFragment extends Fragment implements SongContract.View {
         recyclerView = (RecyclerView)view.findViewById(R.id.songRecycle);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        playAudio("https://upload.wikimedia.org/wikipedia/commons/6/6c/Grieg_Lyric_Pieces_Kobold.ogg");
 
         return view;
     }

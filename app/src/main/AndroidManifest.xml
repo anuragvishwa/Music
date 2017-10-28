@@ -2,6 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.hfad.music">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <permission android:name="android.permission.MEDIA_CONTENT_CONTROL" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -17,7 +22,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".Song.SongActivity" />
-        <activity android:name=".createaccount.CreateAccountActivity"></activity>
+        <service android:name=".Service.MediaPlayerService"
+            android:exported="false"
+            android:enabled="true"/>
+
     </application>
 
 </manifest>
