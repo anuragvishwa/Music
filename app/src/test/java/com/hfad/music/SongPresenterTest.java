@@ -14,6 +14,8 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import static org.mockito.Mockito.verify;
+
 /**
  * Created by anurag on 12/10/17.
  *
@@ -33,36 +35,39 @@ public class SongPresenterTest {
     public void SetUp() throws Exception{
         MockitoAnnotations.initMocks(this);
 
-        authSource = AuthInjection.provideAuthSource();
+       // authSource = AuthInjection.provideAuthSource();
 
         presenter = new SongPresenter(authSource,view, SchedulerInjection.provideSchedulerProvider());
     }
 
     @Test
-    public void whenUserDeleteSong() throws Exception{
+    public void whenUserDeleteSong(){
 
         presenter.deleteSong();
 
-        Mockito.verify(presenter).deleteSong();
-
-
-    }
-
-    @Test
-    public void whenSongDeleteFail() throws Exception{
-        Mockito.verify(view).makeToast(Mockito.anyString());
-    }
-
-    @Test
-    public void whenUserSelectSong() throws Exception{
-
-        Mockito.verify(view).selectSong();
+        verify(view).removeSong();
 
     }
 
     @Test
-    public void whenSongDoesntPlay() throws Exception{
-        Mockito.verify(view).makeToast(Mockito.anyString());
+    public void whenSongDeleteFail() {
+
+        presenter.deleteSong();
+        verify(view).makeToast(Mockito.anyString());
+    }
+
+    @Test
+    public void whenUserSelectSong() {
+
+      //  Mockito.when(view.selectSong())
+        presenter.playSong();
+        verify(view).selectSong();
+
+    }
+
+    @Test
+    public void whenSongDoesntPlay() {
+        verify(view).makeToast(Mockito.anyString());
     }
 
 
