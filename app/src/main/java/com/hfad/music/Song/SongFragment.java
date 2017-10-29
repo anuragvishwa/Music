@@ -1,16 +1,23 @@
 package com.hfad.music.Song;
 
 
+import android.Manifest;
 import android.content.ComponentName;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.media.MediaPlayer;
 import android.media.session.MediaSession;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.PowerManager;
+import android.provider.MediaStore;
 import android.support.annotation.StringRes;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -42,6 +49,8 @@ public class SongFragment extends Fragment implements SongContract.View {
     private View contentContainer;
     private MediaPlayerService player;
     boolean serviceBound = false;
+    ArrayList<Audio> audioList;
+    private int MY_PERMISSIONS_READ_EXTERNAL_STORAGE;
 
 
 
@@ -80,6 +89,30 @@ public class SongFragment extends Fragment implements SongContract.View {
 
         }
 
+    }
+
+    private void loadAudio(){
+        ContentResolver contentResolver = getActivity().getContentResolver();
+
+        Uri uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+        String selection = MediaStore.Audio.Media.IS_MUSIC + "!= 0";
+        String sortOrder = MediaStore.Audio.Media.TITLE + " ASC";
+        Cursor cursor = contentResolver.query(uri, null, selection, null, sortOrder);
+
+        if (cursor != null && cursor.getCount() > 0) {
+            audioList = new ArrayList<Audio>();
+            while (cursor.moveToNext()) {
+                String data = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA));
+                String title = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE));
+                String album = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM));
+                String artist = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST));
+
+                // Save to audioList
+                audioList.add(new Audio(data, title, album, artist));
+            }
+        }
+
+        cursor.close();
     }
 
 
@@ -165,13 +198,51 @@ public class SongFragment extends Fragment implements SongContract.View {
 
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState){
+        savedInstanceState.putBoolean("ServiceState",serviceBound);
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+
+
 
 
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        if(savedInstanceState != null)
+            serviceBound = savedInstanceState.getBoolean("ServiceState");
         this.setRetainInstance(true);
+
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case 1: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    loadAudio();
+
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+
+                } else {
+
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request
+        }
+    }
+
 
 
     @Override
@@ -182,7 +253,14 @@ public class SongFragment extends Fragment implements SongContract.View {
         recyclerView = (RecyclerView)view.findViewById(R.id.songRecycle);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        playAudio("https://upload.wikimedia.org/wikipedia/commons/6/6c/Grieg_Lyric_Pieces_Kobold.ogg");
+
+        ActivityCompat.requestPermissions(getActivity(),
+                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                1);
+
+
+       // playAudio("https://upload.wikimedia.org/wikipedia/commons/6/6c/Grieg_Lyric_Pieces_Kobold.ogg");
+        playAudio(audioList.get(0).getData());
 
         return view;
     }
@@ -212,11 +290,17 @@ public class SongFragment extends Fragment implements SongContract.View {
             recyclerView.setAdapter(adapter);
         }
 
+
     }
 
     @Override
     public void onDestroy(){
-        presenter.unsubscribe();
+        //presenter.unsubscribe();
         super.onDestroy();
+        if(serviceBound){
+            getActivity().unbindService(serviceConnection);
+            //player service is active
+            player.stopSelf();
+        }
     }
 }

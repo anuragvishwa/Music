@@ -14,6 +14,7 @@ public class SongActivity extends AppCompatActivity {
     private FragmentManager manager;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
