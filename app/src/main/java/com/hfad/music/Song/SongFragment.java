@@ -94,7 +94,7 @@ public class SongFragment extends Fragment implements SongContract.View {
     private void loadAudio(){
         ContentResolver contentResolver = getActivity().getContentResolver();
 
-        Uri uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+        Uri uri = MediaStore.Audio.Media.INTERNAL_CONTENT_URI;
         String selection = MediaStore.Audio.Media.IS_MUSIC + "!= 0";
         String sortOrder = MediaStore.Audio.Media.TITLE + " ASC";
         Cursor cursor = contentResolver.query(uri, null, selection, null, sortOrder);
@@ -109,6 +109,7 @@ public class SongFragment extends Fragment implements SongContract.View {
 
                 // Save to audioList
                 audioList.add(new Audio(data, title, album, artist));
+                Toast.makeText(getActivity(), title, Toast.LENGTH_SHORT).show();
             }
         }
 
@@ -257,9 +258,11 @@ public class SongFragment extends Fragment implements SongContract.View {
         ActivityCompat.requestPermissions(getActivity(),
                 new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                 1);
+        loadAudio();
 
 
        // playAudio("https://upload.wikimedia.org/wikipedia/commons/6/6c/Grieg_Lyric_Pieces_Kobold.ogg");
+
         playAudio(audioList.get(0).getData());
 
         return view;
