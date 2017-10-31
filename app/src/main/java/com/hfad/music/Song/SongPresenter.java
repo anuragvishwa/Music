@@ -114,7 +114,7 @@ public class SongPresenter implements SongContract.Presenter,AudioManager.OnAudi
 
     @Override
     public void onBindRepositoryRowViewAtPosition(SongAdapter.ViewHolder holder, int position) {
-        SongList song = listSongs.get(position);
+        SongList song = SongFragment.listSongs.get(position);
         holder.setSongName(song.getTitle());
         holder.setArtistName(song.getArtist());
 
@@ -122,7 +122,7 @@ public class SongPresenter implements SongContract.Presenter,AudioManager.OnAudi
 
     @Override
     public int getSongsCount() {
-        return listSongs.size();
+        return SongFragment.listSongs.size();
     }
 
 

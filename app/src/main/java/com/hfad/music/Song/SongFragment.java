@@ -51,6 +51,7 @@ public class SongFragment extends Fragment implements SongContract.View {
     boolean serviceBound = false;
     ArrayList<Audio> audioList;
     private int MY_PERMISSIONS_READ_EXTERNAL_STORAGE;
+    public static List<SongList> listSongs = new ArrayList<SongList>();
 
 
 
@@ -110,6 +111,11 @@ public class SongFragment extends Fragment implements SongContract.View {
                 // Save to audioList
 
                 audioList.add(new Audio(data, title, album, artist));
+
+                SongList songList = new SongList(title,artist);
+                listSongs.add(songList);
+
+
                 Toast.makeText(getActivity(), title, Toast.LENGTH_SHORT).show();
             }
         }
