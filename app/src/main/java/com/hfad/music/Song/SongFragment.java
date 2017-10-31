@@ -94,8 +94,8 @@ public class SongFragment extends Fragment implements SongContract.View {
     private void loadAudio(){
         ContentResolver contentResolver = getActivity().getContentResolver();
 
-        Uri uri = MediaStore.Audio.Media.INTERNAL_CONTENT_URI;
-        String selection = MediaStore.Audio.Media.IS_MUSIC + "!= 0";
+        Uri uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+        String selection = MediaStore.Audio.Media.IS_MUSIC + "!= 0 AND " + MediaStore.Audio.Media.DURATION +">30000" ;
         String sortOrder = MediaStore.Audio.Media.TITLE + " ASC";
         Cursor cursor = contentResolver.query(uri, null, selection, null, sortOrder);
 
@@ -108,6 +108,7 @@ public class SongFragment extends Fragment implements SongContract.View {
                 String artist = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST));
 
                 // Save to audioList
+
                 audioList.add(new Audio(data, title, album, artist));
                 Toast.makeText(getActivity(), title, Toast.LENGTH_SHORT).show();
             }
@@ -218,31 +219,7 @@ public class SongFragment extends Fragment implements SongContract.View {
 
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case 1: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    loadAudio();
 
-                    // permission was granted, yay! Do the
-                    // contacts-related task you need to do.
-
-                } else {
-
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
-                }
-                return;
-            }
-
-            // other 'case' lines to check for other
-            // permissions this app might request
-        }
-    }
 
 
 
@@ -255,9 +232,7 @@ public class SongFragment extends Fragment implements SongContract.View {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        ActivityCompat.requestPermissions(getActivity(),
-                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                1);
+
         loadAudio();
 
 
